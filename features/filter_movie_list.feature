@@ -22,25 +22,59 @@ Background: movies have been added to database
   And  I am on the RottenPotatoes home page
   
 Scenario: restrict to movies with 'PG' or 'R' ratings
-  Given I am on the RottenPotatoes home page
   # enter step(s) to check the 'PG' and 'R' checkboxes
   When I check the following ratings: PG,R
-  Then the "ratings_PG" checkbox should be checked
-  And the "ratings_R" checkbox should be checked
   # enter step(s) to uncheck all other checkboxes
-  When I uncheck the following ratings: G,PG-13
-  Then the "ratings_G" checkbox should not be checked
-  And the "ratings_PG-13" checkbox should not be checked
+  And I uncheck the following ratings: G,PG-13,NC-17
   # enter step to "submit" the search form on the homepage
-  When I press "ratings_submit"
-  Then I should see "the RottenPotatoes home page"
+  And I press "Refresh"
   # enter step(s) to ensure that PG and R movies are visible
-  And I should see movies filtered by 'PG' and 'R'
+  Then I should see all of the movies:
+  | title |
+  | The Incredibles |
+  | Raiders of the Lost Ark |
+  | Amelie |
+  | The Terminator |
+  | When Harry Met Sally |
   # enter step(s) to ensure that other movies are not visible
-  And I should not see movies with 'G', 'PG-13' and 'NC-17' rating
+  And I should not see all of the movies:
+  | title |
+  | Chicken Run |
+  | Chocolat |
+  | Aladdin |
+  | 2001: A Space Odyssey |
+  | The Help |
   
 Scenario: no ratings selected
   # see assignment
-
+  When I uncheck the following ratings: PG,R,G,PG-13,NC-17
+  And I press "Refresh"
+  Then I should not see all of the movies:
+  | title |
+  | Aladdin                 |
+  | The Terminator          |
+  | When Harry Met Sally    |
+  | The Help                |
+  | Chocolat                |
+  | Amelie                  |
+  | 2001: A Space Odyssey   |
+  | The Incredibles         |
+  | Raiders of the Lost Ark |
+  | Chicken Run             |
+  
 Scenario: all ratings selected
   # see assignment
+  When I check the following ratings: PG,R,G,PG-13,NC-17
+  And I press "Refresh"
+  Then I should see all of the movies:
+  | title |
+  | Aladdin                 |
+  | The Terminator          |
+  | When Harry Met Sally    |
+  | The Help                |
+  | Chocolat                |
+  | Amelie                  |
+  | 2001: A Space Odyssey   |
+  | The Incredibles         |
+  | Raiders of the Lost Ark |
+  | Chicken Run             |

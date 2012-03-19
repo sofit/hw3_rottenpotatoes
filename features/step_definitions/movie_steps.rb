@@ -29,9 +29,21 @@ When /I (un)?check the following ratings: (.*)/ do |uncheck, rating_list|
 # HINT: use String#split to split up the rating_list, then
 #   iterate over the ratings and reuse the "When I check..." or
 #   "When I uncheck..." steps in lines 89-95 of web_steps.rb
-  $LOG.debug(uncheck)
   rating_list.split(',').each do |rating|
-    rating = "ratings_#{rating}"
-    uncheck ? uncheck(rating) : check(rating)
+    step %Q{I #{uncheck}check "ratings_#{rating}"}
+  end
+end
+
+Then /^(?:|I )should (not )?see all of the movies/ do |neg, movies_table|
+  movies_table.hashes.each do |movie|
+    step %Q{I should #{neg}see "#{movie[:title]}"}
+  end
+  rows = movies_table.hashes.count
+  if neg.nil?
+    if page.respond_to? :should
+      page.should have_css("table#movies tbody>tr", :count => rows)
+    else
+      assert page.has_css?("table#movies tbody>tr", :count => rows), "#{page.all("table#movies tbody>tr").count} #{rows}"
+    end
   end
 end
