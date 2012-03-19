@@ -24,20 +24,16 @@ Background: movies have been added to database
 Scenario: restrict to movies with 'PG' or 'R' ratings
   Given I am on the RottenPotatoes home page
   # enter step(s) to check the 'PG' and 'R' checkboxes
-  When I check 'PG'
-  And I check 'R'
-  Then I should see 'PG' checked
-  And I should see 'R' checked
+  When I check the following ratings: PG,R
+  Then the "ratings_PG" checkbox should be checked
+  And the "ratings_R" checkbox should be checked
   # enter step(s) to uncheck all other checkboxes
-  When I uncheck 'G'
-  Then I should see 'G' unchecked
-  When I uncheck 'PG-13'
-  Then I should see 'PG-13' unchecked
-  When I uncheck 'NC-17'
-  Then I should see 'NC-17' unchecked
+  When I uncheck the following ratings: G,PG-13
+  Then the "ratings_G" checkbox should not be checked
+  And the "ratings_PG-13" checkbox should not be checked
   # enter step to "submit" the search form on the homepage
-  When I click on Refresh button
-  Then I should be RottenPotatoes home page
+  When I press "ratings_submit"
+  Then I should see "the RottenPotatoes home page"
   # enter step(s) to ensure that PG and R movies are visible
   And I should see movies filtered by 'PG' and 'R'
   # enter step(s) to ensure that other movies are not visible
