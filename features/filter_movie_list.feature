@@ -30,27 +30,27 @@ Scenario: restrict to movies with 'PG' or 'R' ratings
   And I press "Refresh"
   # enter step(s) to ensure that PG and R movies are visible
   Then I should see all of the movies:
-  | title |
-  | The Incredibles |
+  | title                   |
+  | The Terminator          |
+  | When Harry Met Sally    |
+  | Amelie                  |
+  | The Incredibles         |
   | Raiders of the Lost Ark |
-  | Amelie |
-  | The Terminator |
-  | When Harry Met Sally |
   # enter step(s) to ensure that other movies are not visible
   And I should not see all of the movies:
-  | title |
-  | Chicken Run |
-  | Chocolat |
-  | Aladdin |
-  | 2001: A Space Odyssey |
-  | The Help |
+  | title                   |
+  | Aladdin                 |
+  | The Help                |
+  | Chocolat                |
+  | 2001: A Space Odyssey   |
+  | Chicken Run             |
   
 Scenario: no ratings selected
   # see assignment
   When I uncheck the following ratings: PG,R,G,PG-13,NC-17
   And I press "Refresh"
   Then I should not see all of the movies:
-  | title |
+  | title                   |
   | Aladdin                 |
   | The Terminator          |
   | When Harry Met Sally    |
@@ -67,7 +67,7 @@ Scenario: all ratings selected
   When I check the following ratings: PG,R,G,PG-13,NC-17
   And I press "Refresh"
   Then I should see all of the movies:
-  | title |
+  | title                   |
   | Aladdin                 |
   | The Terminator          |
   | When Harry Met Sally    |

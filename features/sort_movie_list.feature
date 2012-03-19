@@ -24,23 +24,57 @@ Background: movies have been added to database
 Scenario: sort movies alphabetically
   # your steps here
   Given I am on the RottenPotatoes home page
-  When I follow title
-  Then I should see:
-  | title                   | rating | release_date |
-  | Aladdin                 | G      | 25-Nov-1992  |
-  | The Terminator          | R      | 26-Oct-1984  |
-  | When Harry Met Sally    | R      | 21-Jul-1989  |
-  | The Help                | PG-13  | 10-Aug-2011  |
-  | Chocolat                | PG-13  | 5-Jan-2001   |
-  | Amelie                  | R      | 25-Apr-2001  |
-  | 2001: A Space Odyssey   | G      | 6-Apr-1968   |
-  | The Incredibles         | PG     | 5-Nov-2004   |
-  | Raiders of the Lost Ark | PG     | 12-Jun-1981  |
-  | Chicken Run             | G      | 21-Jun-2000  |
+  When I check the following ratings: PG,R,G,PG-13,NC-17
+  And I press "Refresh"
+  And I follow "Movie Title"
+  Then I should see all of the movies:
+  | title                   |
+  | Aladdin                 |
+  | The Terminator          |
+  | When Harry Met Sally    |
+  | The Help                |
+  | Chocolat                |
+  | Amelie                  |
+  | 2001: A Space Odyssey   |
+  | The Incredibles         |
+  | Raiders of the Lost Ark |
+  | Chicken Run             |
+  
+  And I should see "2001: A Space Odyssey" before "Aladdin"
+  And I should see "Aladdin" before "Amelie"
+  And I should see "Amelie" before "Chicken Run"
+  And I should see "Chicken Run" before "Chocolat"
+  And I should see "Chocolat" before "Raiders of the Lost Ark"
+  And I should see "Raiders of the Lost Ark" before "The Help"
+  And I should see "The Help" before "The Incredibles"
+  And I should see "The Incredibles" before "The Terminator"
+  And I should see "The Terminator" before "When Harry Met Sally"
 
 Scenario: sort movies in increasing order of release date
   # your steps here
   Given I am on the RottenPotatoes home page
-  When I click on release date column header
-  Then movies should be sorted alphabetically
-
+  When I check the following ratings: PG,R,G,PG-13,NC-17
+  And I press "Refresh"
+  And I follow "Release Date"
+  Then I should see all of the movies:
+  | title                   |
+  | Aladdin                 |
+  | The Terminator          |
+  | When Harry Met Sally    |
+  | The Help                |
+  | Chocolat                |
+  | Amelie                  |
+  | 2001: A Space Odyssey   |
+  | The Incredibles         |
+  | Raiders of the Lost Ark |
+  | Chicken Run             |
+  
+  And I should see "2001: A Space Odyssey" before "Raiders of the Lost Ark"
+  And I should see "Raiders of the Lost Ark" before "The Terminator"
+  And I should see "The Terminator" before "When Harry Met Sally"
+  And I should see "When Harry Met Sally" before "Aladdin"
+  And I should see "Aladdin" before "Chicken Run"
+  And I should see "Chicken Run" before "Chocolat"
+  And I should see "Chocolat" before "Amelie"
+  And I should see "Amelie" before "The Incredibles"
+  And I should see "The Incredibles" before "The Help"
